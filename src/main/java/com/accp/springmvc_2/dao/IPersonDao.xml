@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.accp.springmvc_2.dao.IPersonDao">
+
+	<resultMap type="person" id="personMap">
+		<id column="pid" property="personId" />
+		<result column="pname" property="personName" />
+		<result column="psex" property="personSex" />
+		<result column="pdate" property="personDate" />
+		<result column="pimg" property="personImg" />
+	</resultMap>
+
+	<select id="queryPerson" resultMap="personMap">
+		SELECT * FROM tbl_person
+	</select>
+
+	<select id="loadPerson" resultMap="personMap">
+		SELECT * FROM tbl_person where
+		pid=#{0}
+	</select>
+	
+	<select id="countPersonByName" resultType="integer">
+		SELECT count(*) FROM tbl_person where pname=#{0}
+	</select>
+
+	<delete id="deletePerson">
+	    delete from tbl_address where apid=#{0};
+		delete from tbl_person where pid=#{0}
+	</delete>
+
+	<insert id="savePerson" useGeneratedKeys="true" keyProperty="personId"
+		keyColumn="pid">
+		insert into
+		tbl_person(pname,psex,pdate,pimg)
+		values(#{personName},#{personSex},#{personDate,jdbcType=DATE},#{personImg})
+	</insert>
+
+
+
+</mapper>
